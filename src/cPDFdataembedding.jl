@@ -265,8 +265,9 @@ function extract_attachments(pdf_path::String, out_dir::String="")
             warn("Attachment $file_name not found in the output directory: $out_dir")
         end
     end
-    
-    _rmtempdir() # only the ref, not the actual temp dir
+    if out_dir != tmpdir
+        _rmtempdir() # only the ref, not the actual temp dir
+    end
     return extracted_files
 end
 
@@ -281,7 +282,7 @@ function attach_jld2(pdf_path::String, data, dataname::String="data", out_path::
     
     # Save data to a temporary JLD2 file
     jld2_path = joinpath(tmpdir, "$dataname.jld2")
-    JLD2.@save jld2_path data
+    JLD2.@save jld2_path dataname => data
 
     # Attach the JLD2 file to the PDF
     out_path = attach_file(pdf_path, jld2_path, out_path)
@@ -294,7 +295,7 @@ function attach_jld2!(pdf_path::String, data, dataname::String="data")
     # overwrite the original PDF
     _mktempdir()
     jld2_path = joinpath(tmpdir, "$dataname.jld2")
-    JLD2.@save jld2_path data
+    JLD2.@save jld2_path dataname => data
 
     out_path = pdf_path
     out_path = attach_file!(pdf_path, jld2_path)
@@ -334,7 +335,7 @@ function extract_jld2s(pdf_path::String, out_dir::String="")
     for jld2_file in jld2_files
         dataname = basename(jld2_file)
         dataname = chop(dataname, tail=5) # remove .jld2 extension
-        data[dataname] = JLD2.load(jld2_file)
+        data[dataname] = JLD2.load(jld2_file)[dataname]
     end
     _rmtempdir() # only the ref, not the actual temp dir
     return data
