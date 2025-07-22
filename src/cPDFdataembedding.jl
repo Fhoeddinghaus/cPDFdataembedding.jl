@@ -324,7 +324,7 @@ function extract_jld2s(pdf_path::String, out_dir::String="")
     if out_dir != tmpdir
         for (i, jld2_file) in enumerate(jld2_files)
             new_path = joinpath(out_dir, basename(jld2_file))
-            mv(jld2_file, new_path)
+            cp(jld2_file, new_path)
             jld2_files[i] = new_path  # update the path in the list
         end
         return jld2_files
@@ -398,7 +398,7 @@ function extract_scripts(pdf_path::String, out_dir::String="")
     if out_dir != tmpdir
         for (i, script_file) in enumerate(script_files)
             new_path = joinpath(out_dir, basename(script_file))
-            mv(script_file, new_path)
+            cp(script_file, new_path)
             script_files[i] = new_path  # update the path in the list
         end
         return script_files
