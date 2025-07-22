@@ -334,7 +334,7 @@ function extract_jld2s(pdf_path::String, out_dir::String="")
     for jld2_file in jld2_files
         dataname = basename(jld2_file)
         dataname = chop(dataname, tail=5) # remove .jld2 extension
-        data[dataname] = JLD2.@load jld2_file
+        data[dataname] = JLD2.load(jld2_file)
     end
     _rmtempdir() # only the ref, not the actual temp dir
     return data
