@@ -282,7 +282,7 @@ function attach_jld2(pdf_path::String, data, dataname::String="data", out_path::
     
     # Save data to a temporary JLD2 file
     jld2_path = joinpath(tmpdir, "$dataname.jld2")
-    JLD2.@save jld2_path dataname => data
+    JLD2.save(jld2_path, dataname, data)
 
     # Attach the JLD2 file to the PDF
     out_path = attach_file(pdf_path, jld2_path, out_path)
@@ -295,7 +295,7 @@ function attach_jld2!(pdf_path::String, data, dataname::String="data")
     # overwrite the original PDF
     _mktempdir()
     jld2_path = joinpath(tmpdir, "$dataname.jld2")
-    JLD2.@save jld2_path dataname => data
+    JLD2.save(jld2_path, dataname, data)
 
     out_path = pdf_path
     out_path = attach_file!(pdf_path, jld2_path)
