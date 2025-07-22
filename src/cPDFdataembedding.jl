@@ -135,6 +135,12 @@ function _embed(pdf_path::String, data::String, out_path::String)
     return out_path
 end
 
+"""
+    function meta_add_raw_data(pdf_path::String, data::String, out_path::String="")
+
+Adds a raw data string to the metadata of a PDF file.
+If the PDF file does not have metadata in xmp format, it will create a new metadata section.
+"""
 function meta_add_raw_data(pdf_path::String, data::String, out_path::String="")
     _mktempdir()
     if out_path == ""
@@ -148,6 +154,11 @@ function meta_add_raw_data(pdf_path::String, data::String, out_path::String="")
     return out_path
 end
 
+"""
+    function meta_add_raw_data!(pdf_path::String, data::String)
+
+Overwriting version of `meta_add_raw_data` that modifies the original PDF file directly.
+"""
 function meta_add_raw_data!(pdf_path::String, data::String)
     # overwrite the original PDF
     out_path = pdf_path
@@ -158,6 +169,12 @@ function meta_add_raw_data!(pdf_path::String, data::String)
 end
 
 # Function to extract embedded data from a PDF
+"""
+    function meta_extract_raw_data(pdf_path::String)
+
+Extracts raw data strings embedded in the metadata of a PDF file.
+If no data is embedded, it returns an empty string.
+"""
 function meta_extract_raw_data(pdf_path::String)
     _mktempdir()
     xml_path = _extract_meta_from_pdf(pdf_path)
@@ -194,6 +211,13 @@ function meta_extract_raw_data(pdf_path::String)
 end
 
 
+"""
+    function attach_file(pdf_path::String, file_path::String, out_path::String="")
+
+Attaches a file to a PDF document.
+If `out_path` is not specified, it creates a temporary PDF file with the attached file.
+Returns the path to the new PDF file with the attached file.
+"""
 function attach_file(pdf_path::String, file_path::String, out_path::String="")
     _mktempdir()
     if out_path == ""
@@ -214,6 +238,11 @@ function attach_file(pdf_path::String, file_path::String, out_path::String="")
     return out_path
 end
 
+"""
+    function attach_file!(pdf_path::String, file_path::String)
+
+Overwriting version of `attach_file` that modifies the original PDF file directly.
+"""
 function attach_file!(pdf_path::String, file_path::String)
     # overwrite the original PDF
     _mktempdir()
@@ -231,6 +260,14 @@ function attach_file!(pdf_path::String, file_path::String)
 end
 
 
+"""
+    function extract_attachments(pdf_path::String, out_dir::String="")
+
+Extracts all attached files from a PDF document.
+If `out_dir` is not specified, it creates a temporary directory to store the extracted files.
+Returns a list of paths to the extracted files.
+If no attachments are found, it returns an empty array.
+"""
 function extract_attachments(pdf_path::String, out_dir::String="")
     _mktempdir()
     if out_dir == ""
@@ -271,6 +308,13 @@ function extract_attachments(pdf_path::String, out_dir::String="")
     return extracted_files
 end
 
+"""
+    function attach_jld2(pdf_path::String, data, dataname::String="data", out_path::String="")
+
+Attaches a JLD2 file containing data to a PDF document.
+If `out_path` is not specified, it creates a temporary PDF file with the attached JLD2 file.
+Returns the path to the new PDF file with the attached JLD2 file.
+"""
 function attach_jld2(pdf_path::String, data, dataname::String="data", out_path::String="")
     _mktempdir()
     if out_path == ""
@@ -291,6 +335,11 @@ function attach_jld2(pdf_path::String, data, dataname::String="data", out_path::
     return out_path
 end
 
+"""
+    function attach_jld2!(pdf_path::String, data, dataname::String="data")
+
+Overwriting version of `attach_jld2` that modifies the original PDF file directly.
+"""
 function attach_jld2!(pdf_path::String, data, dataname::String="data")
     # overwrite the original PDF
     _mktempdir()
@@ -304,6 +353,15 @@ function attach_jld2!(pdf_path::String, data, dataname::String="data")
     return out_path
 end
 
+
+"""
+    function extract_jld2s(pdf_path::String, out_dir::String="")
+
+Extracts all JLD2 files attached to a PDF document.
+If `out_dir` is not specified, it creates a temporary directory to store the extracted JLD2 files.
+Returns a list of paths to the extracted JLD2 files or a dictionary with data names as keys and data contents as values.
+If no JLD2 files are found, it returns an empty array.
+"""
 function extract_jld2s(pdf_path::String, out_dir::String="")
     _mktempdir()
     if out_dir == ""
@@ -341,6 +399,14 @@ function extract_jld2s(pdf_path::String, out_dir::String="")
     return data
 end
 
+"""
+    function attach_script(pdf_path::String, script::String, scriptname::String="script.jl", out_path::String="")
+
+Attaches a Julia script file to a PDF document.
+If `out_path` is not specified, it creates a temporary PDF file with the attached script file.
+Returns the path to the new PDF file with the attached script file.
+If `scriptname` is not specified, it defaults to "script.jl".
+"""
 function attach_script(pdf_path::String, script::String, scriptname::String="script.jl", out_path::String="")
     _mktempdir()
     if out_path == ""
@@ -363,6 +429,11 @@ function attach_script(pdf_path::String, script::String, scriptname::String="scr
     return out_path
 end
 
+"""
+    function attach_script!(pdf_path::String, script::String, scriptname::String="script.jl")
+
+Overwriting version of `attach_script` that modifies the original PDF file directly.
+"""
 function attach_script!(pdf_path::String, script::String, scriptname::String="script.jl")
     # overwrite the original PDF
     _mktempdir()
@@ -378,6 +449,13 @@ function attach_script!(pdf_path::String, script::String, scriptname::String="sc
     return out_path
 end
 
+"""
+    function extract_scripts(pdf_path::String, out_dir::String="")
+
+Extracts all Julia script files attached to a PDF document.
+If `out_dir` is not specified, it creates a temporary directory to store the extracted script files.
+Returns a list of paths to the extracted script files or a dictionary with script names as keys and script contents as values.
+"""
 function extract_scripts(pdf_path::String, out_dir::String="")
     _mktempdir()
     if out_dir == ""
