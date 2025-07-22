@@ -21,7 +21,13 @@ export
 function _check_cpdf()
     cmd = Sys.which("cpdf")
     if cmd == nothing
-        error("Coherent PDF command line tool (cpdf) not found. Please install it from https://www.coherentpdf.com/ and ensure it is in your PATH.")
+        error("Coherent PDF command line tool (cpdf) not found. Please install it (version 2.8.x) from https://www.coherentpdf.com/ or https://github.com/johnwhitington/cpdf-source and ensure it is in your PATH.")
+    end
+    # check version
+    cmd = `cpdf -version`
+    version_output = read(cmd, String)
+    if !startswith(version_output, "cpdf AGPL Version 2.8.")
+        warn("This package is designed to work with cpdf AGPL Version 2.8.x. You are using: $version_output. If you encounter issues or think this warning should not have appeared, please ensure you have the correct version installed or open an issue at https://github.com/fhoeddinghaus/cPDFdataembedding.jl")
     end
 end
 

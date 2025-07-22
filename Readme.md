@@ -14,7 +14,7 @@ or
 ```
 
 ## Requirements
-This package requires the command line tool `cpdf` (coherentpdf) to be installed and available in your system's PATH. 
+This package requires the command line tool `cpdf` (coherentpdf, version 2.8.x) to be installed and available in your system's PATH. 
 You can download it e.g. from [https://github.com/johnwhitington/cpdf-source](https://github.com/johnwhitington/cpdf-source) or install it via a package manager, e.g. via Homebrew on macOS.
 
 ## Example Usage
